@@ -1,7 +1,7 @@
 import { prisma } from "wasp/server";
 import type { ProcessVideoExportJob } from "wasp/server/jobs";
 
-export const processVideoExportJob: ProcessVideoExportJob<{ jobId: string }> = async (args, context) => {
+export const processVideoExportJob: ProcessVideoExportJob<{ jobId: string }, void> = async (args, context) => {
   const { jobId } = args;
 
   // 1. Mark job as processing
