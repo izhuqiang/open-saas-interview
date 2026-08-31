@@ -5,6 +5,7 @@ import { NotFoundPage } from "./src/client/components/NotFoundPage" with { type:
 import { serverEnvValidationSchema } from "./src/env" with { type: "ref" };
 import { LandingPage } from "./src/landing-page/LandingPage" with { type: "ref" };
 import { seedMockUsers } from "./src/server/scripts/dbSeeds" with { type: "ref" };
+import { setupFn } from "./src/server/setup" with { type: "ref" };
 
 import { adminSpec } from "./src/admin/admin.wasp";
 import { analyticsSpec } from "./src/analytics/analytics.wasp";
@@ -35,7 +36,7 @@ export default app({
   },
   server: {
     envValidationSchema: serverEnvValidationSchema,
-    setupFn: import("./src/server/setup.js"),
+    setupFn: setupFn,
   },
   emailSender,
   spec: [
