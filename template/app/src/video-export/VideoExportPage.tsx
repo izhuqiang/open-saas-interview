@@ -11,6 +11,11 @@ export function VideoExportPage() {
   const [htmlContent, setHtmlContent] = useState("");
 
   const handleCreateJob = async () => {
+    if (!prompt.trim() || !htmlContent.trim()) {
+      alert("Please fill in both Prompt and HTML Content");
+      return;
+    }
+    
     try {
       await createJob({ prompt, htmlContent });
       setPrompt("");
