@@ -35,6 +35,7 @@ export default app({
   },
   server: {
     envValidationSchema: serverEnvValidationSchema,
+    setupFn: import("./src/server/setup.js"),
   },
   emailSender,
   spec: [
