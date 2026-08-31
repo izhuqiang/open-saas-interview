@@ -198,4 +198,4 @@ sequenceDiagram
 
 ### 演示视频 (Demo Video)
 
-<video src="https://github.com/izhuqiang/open-saas-interview/raw/feat/ai-animation-to-video/template/app/public/demo.mp4" controls="controls" width="100%"></video>
+https://github.com/izhuqiang/open-saas-interview/raw/feat/ai-animation-to-video/template/app/public/demo.mp4
