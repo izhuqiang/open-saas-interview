@@ -94,16 +94,28 @@ export const processVideoExportJob: ProcessVideoExportJob<{ jobId: string }, voi
 
     console.log(`[Job ${jobId}] Video generated at ${outputVideoPath}`);
 
-    // 5. 模拟上传到 S3 / 云存储 (这里我们直接返回一个模拟的或者本地的假链接，在真实的 SaaS 中需要使用 aws-sdk 上传)
-    // 注意：因为是本地测试，我们先给个占位链接。如果要有真实文件，可以将其拷贝到 public 目录下。
-    const mockVideoUrl = "https://www.w3schools.com/html/mov_bbb.mp4";
+    // 5. 将生成的 MP4 移动到 public 目录下以便前端可以直接下载
+    // Wasp 的 public 目录位于项目根目录的 public 文件夹，编译后会作为静态资源暴露
+    const publicVideoDir = path.join(process.cwd(), "public", "exports");
+    if (!fs.existsSync(publicVideoDir)) {
+      fs.mkdirSync(publicVideoDir, { recursive: true });
+    }
+    
+    const finalVideoFileName = `export_${jobId}.mp4`;
+    const finalVideoPath = path.join(publicVideoDir, finalVideoFileName);
+    
+    // 复制文件到 public 目录
+    fs.copyFileSync(outputVideoPath, finalVideoPath);
 
-    // 6. 标记任务完成
+    // 6. 返回相对路径的 URL
+    const realVideoUrl = `/exports/${finalVideoFileName}`;
+
+    // 7. 标记任务完成
     await prisma.videoExportJob.update({
       where: { id: jobId },
       data: { 
         status: "completed",
-        videoUrl: mockVideoUrl
+        videoUrl: realVideoUrl
       },
     });
 
