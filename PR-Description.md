@@ -193,3 +193,9 @@ sequenceDiagram
 ```
 
 点击 **Export to Video**，等待约 5~8 秒后，任务状态将变更为 `completed`，点击右侧的 **Download Video** 即可下载生成的 `mp4` 视频文件。
+
+---
+
+### 演示视频 (Demo Video)
+
+<video src="https://github.com/izhuqiang/open-saas-interview/raw/feat/ai-animation-to-video/template/app/public/demo.mp4" controls="controls" width="100%"></video>
