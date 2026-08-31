@@ -67,7 +67,13 @@ export function VideoExportPage() {
               </div>
               <div>
                 {job.status === "completed" && job.videoUrl && (
-                  <a href={job.videoUrl} target="_blank" rel="noreferrer" download={`animation_${job.id}.mp4`} className="text-blue-500 hover:underline">
+                  <a 
+                    href={job.videoUrl.startsWith('http') ? job.videoUrl : `http://localhost:3001${job.videoUrl}`} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    download={`animation_${job.id}.mp4`}
+                    className="text-blue-500 hover:underline"
+                  >
                     Download Video
                   </a>
                 )}

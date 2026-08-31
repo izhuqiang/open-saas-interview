@@ -94,8 +94,15 @@ export const processVideoExportJob: ProcessVideoExportJob<{ jobId: string }, voi
 
     console.log(`[Job ${jobId}] Video generated at ${outputVideoPath}`);
 
+    // 检查视频文件是否真实存在并且大小大于0
+    if (!fs.existsSync(outputVideoPath) || fs.statSync(outputVideoPath).size === 0) {
+       throw new Error("FFmpeg output video is missing or empty.");
+    }
+
     // 5. 将生成的 MP4 移动到 public 目录下以便前端可以直接下载
-    // Wasp 的 public 目录位于项目根目录的 public 文件夹，编译后会作为静态资源暴露
+    // 注意：Wasp 的构建机制要求静态文件放在根目录的 public 文件夹，但运行时会被复制到 .wasp/out/public
+    // 为了确保前端能够访问到，我们需要将文件放到最终运行时提供静态服务的地方
+    // Wasp server 默认在项目根目录运行，所以 public/ 应该能被拦截到
     const publicVideoDir = path.join(process.cwd(), "public", "exports");
     if (!fs.existsSync(publicVideoDir)) {
       fs.mkdirSync(publicVideoDir, { recursive: true });
